@@ -4,9 +4,12 @@ import App from "./App.jsx";
 import "./index.scss";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
+import { ImagesProvider } from "./context/ImagesContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <ImagesProvider>
+      <App />
+    </ImagesProvider>
   </React.StrictMode>
 );
