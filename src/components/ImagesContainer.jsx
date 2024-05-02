@@ -1,24 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import Image from "./Image";
-import axios from "axios";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { Outlet } from "react-router-dom";
 import { ImagesContext } from "../context/ImagesContext";
 
-const URL = "https://api.unsplash.com/";
-const KEY = "-EoWr5-FKQREDkQL61KtKbYNka25pbgbieAeGP88zl4";
-
 function ImagesContainer() {
-  const [images, setImages] = useState([]);
-  const { isModalOpen, setIsModalOpen } = useContext(ImagesContext);
-
-  // console.log(images);
-
-  useEffect(() => {
-    axios
-      .get(`${URL}//photos?order_by=popular&client_id=${KEY}`)
-      .then((res) => setImages(res.data));
-  }, []);
+  const { isModalOpen, setIsModalOpen, images } = useContext(ImagesContext);
 
   return (
     <div className="container-sm p-3 py-sm-5 px-3 px-sm-0">

@@ -1,6 +1,15 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { ImagesContext } from "../context/ImagesContext";
 
 function Navbar() {
+  const { query, setQuery, fetchData } = useContext(ImagesContext);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    fetchData();
+  }
+
   return (
     <>
       <nav className="navbar bg-body-tertiary py-3">
@@ -14,12 +23,15 @@ function Navbar() {
           <form
             className="d-flex flex-grow-1 w-50 position-relative "
             role="search"
+            onSubmit={(e) => handleSubmit(e)}
           >
             <input
               className="form-control me-4 ps-5"
               type="search"
               placeholder="Search"
               aria-label="Search "
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
             />
             <span className="position-absolute search-icon fs-5">
               <i className="bi bi-search"></i>
