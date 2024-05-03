@@ -26,8 +26,6 @@ function ModalWindow() {
       .then((res) => setData(res.data));
   }, [imagesID]);
 
-  console.log(data);
-
   return (
     <Modal
       show={isModalOpen}

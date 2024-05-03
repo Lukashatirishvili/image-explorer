@@ -1,13 +1,15 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ImagesContext } from "../context/ImagesContext";
+import { fetchData } from "../api/apiService";
 
 function Navbar() {
-  const { query, setQuery, fetchData } = useContext(ImagesContext);
+  const { query, setQuery, setImages, setIsLoading, setError } =
+    useContext(ImagesContext);
 
   function handleSubmit(e) {
     e.preventDefault();
-    fetchData();
+    fetchData(query, setImages, setIsLoading, setError);
   }
 
   return (
