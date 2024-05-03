@@ -4,10 +4,13 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { Outlet } from "react-router-dom";
 import { ImagesContext } from "../context/ImagesContext";
 import Loader from "./Loader";
+import Alert from "./Alert";
 
 function ImagesContainer() {
-  const { isModalOpen, setIsModalOpen, images, isLoading } =
+  const { isModalOpen, setIsModalOpen, images, isLoading, error } =
     useContext(ImagesContext);
+
+  if (error) return <Alert />;
 
   return (
     <div className="container-sm p-3 py-sm-5 px-3 px-sm-0">

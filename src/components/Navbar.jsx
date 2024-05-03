@@ -4,12 +4,22 @@ import { ImagesContext } from "../context/ImagesContext";
 import { fetchData } from "../api/apiService";
 
 function Navbar() {
-  const { query, setQuery, setImages, setIsLoading, setError } =
-    useContext(ImagesContext);
+  const {
+    query,
+    setQuery,
+    setImages,
+    setIsLoading,
+    setPage,
+    setError,
+    setHistory,
+  } = useContext(ImagesContext);
 
   function handleSubmit(e) {
     e.preventDefault();
     fetchData(query, setImages, setIsLoading, setError);
+    setHistory((history) => [...history, query]);
+    setPage(2);
+    setError(null);
   }
 
   return (

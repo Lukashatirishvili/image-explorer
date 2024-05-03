@@ -1,6 +1,13 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { ImagesContext } from "../context/ImagesContext";
 
 function HistoryNavbar() {
+  const { setHistory } = useContext(ImagesContext);
+
+  function handleClearHistory() {
+    setHistory([]);
+  }
   return (
     <nav className="navbar bg-body-tertiary py-3">
       <div className="container-sm">
@@ -11,7 +18,12 @@ function HistoryNavbar() {
           </span>
         </div>
         <div className="d-flex ms-auto me-auto m-md-0">
-          <button className="btn btn-outline-danger">Clear history</button>
+          <button
+            className="btn btn-outline-danger"
+            onClick={() => handleClearHistory()}
+          >
+            Clear history
+          </button>
           <div className="vertical-line mx-3"></div>
           <Link to={"/"} className="btn btn-outline-primary">
             Main page

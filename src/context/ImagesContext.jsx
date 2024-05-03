@@ -14,6 +14,9 @@ export function ImagesProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(2);
+  const [history, setHistory] = useState(
+    JSON.parse(localStorage.getItem("history")) || []
+  );
 
   // ****** Scroll Functionality ********
   const handleScroll = useCallback(() => {
@@ -35,8 +38,15 @@ export function ImagesProvider({ children }) {
   useEffect(() => {
     axios
       .get(`${URL}//photos?order_by=popular&client_id=${KEY}`)
-      .then((res) => setImages(res.data));
+      .then((res) => {
+        setImages(res.data);
+      });
   }, []);
+
+  // ***** set History Item to localstorage *****
+  useEffect(() => {
+    localStorage.setItem("history", JSON.stringify(history) || []);
+  }, [history]);
 
   return (
     <ImagesContext.Provider
@@ -49,7 +59,11 @@ export function ImagesProvider({ children }) {
         setQuery,
         isLoading,
         setIsLoading,
+        error,
         setError,
+        setPage,
+        history,
+        setHistory,
       }}
     >
       {children}

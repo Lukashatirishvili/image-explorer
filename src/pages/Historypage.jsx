@@ -1,10 +1,11 @@
+import HistoryContainer from "../components/HistoryContainer";
 import HistoryNavbar from "../components/HistoryNavbar";
 
 function Historypage() {
   return (
     <div>
       <HistoryNavbar />
-      History
+      <HistoryContainer />
     </div>
   );
 }

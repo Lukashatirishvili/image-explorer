@@ -36,7 +36,8 @@ export const fetchData = async (query, setImages, setIsLoading, setError) => {
     const res = await axios.get(
       `${URL}/search/photos?page=1&query=${query}&client_id=${KEY}`
     );
-
+    if (res.data.results.length === 0)
+      setError("Sorry, the photo could not be found");
     setImages(res.data.results);
   } catch (err) {
     setError(err);
