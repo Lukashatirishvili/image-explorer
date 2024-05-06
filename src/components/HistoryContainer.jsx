@@ -16,7 +16,11 @@ function HistoryContainer() {
         {history && (
           <ListGroup className="text-center shadow-sm">
             {history.map((el) => (
-              <History key={el} el={el} setHistory={setHistory} />
+              <History
+                key={`${Date.now()}-${Math.random()}`}
+                el={el}
+                setHistory={setHistory}
+              />
             ))}
           </ListGroup>
         )}

@@ -1,5 +1,11 @@
 import axios from "axios";
-import { createContext, useCallback, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { fetchMoreData } from "../api/apiService";
 
 const URL = "https://api.unsplash.com/";
@@ -17,6 +23,23 @@ export function ImagesProvider({ children }) {
   const [history, setHistory] = useState(
     JSON.parse(localStorage.getItem("history")) || []
   );
+
+  const cachedData = useMemo(() => new Map(), []);
+
+  // Effect to handle expiration of elements
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentTime = Date.now();
+
+      for (const [key, { expirationTime }] of cachedData.entries()) {
+        if (currentTime >= expirationTime) {
+          cachedData.delete(key);
+        }
+      }
+    }, 1000); // Check every second for expired elements
+
+    return () => clearInterval(interval); // Clean up interval on unmount
+  }, [cachedData]);
 
   // ****** Scroll Functionality ********
   const handleScroll = useCallback(() => {
@@ -64,6 +87,7 @@ export function ImagesProvider({ children }) {
         setPage,
         history,
         setHistory,
+        cachedData,
       }}
     >
       {children}

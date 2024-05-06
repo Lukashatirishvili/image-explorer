@@ -28,17 +28,34 @@ export const fetchMoreData = async (
 };
 
 // ****** fetch photos when user submit search ******
-export const fetchData = async (query, setImages, setIsLoading, setError) => {
+export const fetchData = async (
+  query,
+  setImages,
+  setIsLoading,
+  setError,
+  cachedData
+) => {
   if (query.length < 2) return;
+
+  if (cachedData.has(query)) {
+    const data = cachedData.get(query);
+    setImages(data.data);
+  }
+
+  if (cachedData.has(query)) return;
 
   try {
     setIsLoading(true);
     const res = await axios.get(
       `${URL}/search/photos?page=1&query=${query}&client_id=${KEY}`
     );
+    const data = res.data.results;
     if (res.data.results.length === 0)
       setError("Sorry, the photo could not be found");
-    setImages(res.data.results);
+    setImages(data);
+    const expirationTime = Date.now() + 1 * 60 * 1000;
+    const element = { data, expirationTime };
+    cachedData.set(query, element);
   } catch (err) {
     setError(err);
   } finally {

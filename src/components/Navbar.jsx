@@ -11,13 +11,15 @@ function Navbar() {
     setIsLoading,
     setPage,
     setError,
+    history,
     setHistory,
+    cachedData,
   } = useContext(ImagesContext);
 
   function handleSubmit(e) {
     e.preventDefault();
-    fetchData(query, setImages, setIsLoading, setError);
-    setHistory((history) => [...history, query]);
+    fetchData(query, setImages, setIsLoading, setError, cachedData);
+    if (!history.includes(query)) setHistory((history) => [...history, query]);
     setPage(2);
     setError(null);
   }
